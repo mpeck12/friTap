@@ -32,13 +32,13 @@ class Android:
 
     
     def adb_check_root(self):
-        return bool(subprocess.run(['adb', 'shell','su -v'], capture_output=True, text=True).stdout)
+        return bool(subprocess.run(['adb', 'shell','su root echo 1'], capture_output=True, text=True).stdout)
     
     def run_adb_command_as_root(self,command):
         if self.adb_check_root() == False:
             print("[-] none rooted device. Please root it before using friTap and ensure that you are able to run commands with the su-binary....")
             exit(2)
-        output = subprocess.run(['adb', 'shell','su -c '+command], capture_output=True, text=True)
+        output = subprocess.run(['adb', 'shell','su root '+command], capture_output=True, text=True)
         return output
 
     def _adb_push_file(self,file,dst):
@@ -128,7 +128,7 @@ class Android:
     def run_tcpdump_capture(self,pcap_name):
         self.close_friTap_if_none_android()
         self.pcap_name = pcap_name
-        return subprocess.Popen(['adb', 'shell','su -c '+self.dst_path+'./'+self.tcpdump_version+' -i any -s 0 -w '+self.dst_path+pcap_name])
+        return subprocess.Popen(['adb', 'shell','su root tcpdump -i any -s 0 -w ' + self.dst_path + pcap_name + ' "not (tcp port 5555 or tcp port 27042)"'])
     
     def _is_Android(self):
         try:

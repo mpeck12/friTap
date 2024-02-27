@@ -379,7 +379,7 @@ def ssl_log(app, pcap_name=None, verbose=False, spawn=False, keylog=False, enabl
         print(f'[*] friTap will continue after the named pipe is ready....\n')
         pcap_obj =  pcap.PCAP(fifo_file,SSL_READ,SSL_WRITE,full_capture, mobile,debug_mode)
 
-    elif pcap_name:
+    elif pcap_name and (not(spawn) or not(full_capture)):
         pcap_obj =  pcap.PCAP(pcap_name,SSL_READ,SSL_WRITE,full_capture, mobile,debug_mode)
         
 

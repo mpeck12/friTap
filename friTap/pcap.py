@@ -114,7 +114,7 @@ class PCAP:
                 
             def full_mobile_capture(self):
                 if pcap_class.android_Instance.is_Android():
-                    pcap_class.android_Instance.push_tcpdump_to_device()
+                    # pcap_class.android_Instance.push_tcpdump_to_device()
                     android_capture_process = pcap_class.android_Instance.run_tcpdump_capture("_"+self._get_pcap_base_name())
                     print("[*] doing full capture on Android")
                     return android_capture_process
